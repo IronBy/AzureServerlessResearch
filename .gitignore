@@ -1,0 +1,5 @@
+/WebApi/.vs
+/WebApi/LogApi/bin
+/WebApi/LogApi/obj
+*/packages
+*.user

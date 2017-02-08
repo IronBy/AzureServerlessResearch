@@ -50,7 +50,7 @@ private static async Task AddDbLogItem(HttpRequestMessage req, SqlConnection con
         + $"values (NewID(), '{Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID")}', "
         + "getutcdate(), "
         + $"'{await GetParameter(req, "comment")}', "
-        + $"'{await GetParameter(req, "createdby")}')";
+        + $"'azurefunc')";
     using (SqlCommand cmd = new SqlCommand(sqlText, connection))
     {
         await cmd.ExecuteNonQueryAsync();
