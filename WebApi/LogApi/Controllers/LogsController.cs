@@ -53,10 +53,12 @@ namespace LogApi.Controllers
             var sqlText = "INSERT INTO ActionLog (id, nodeid, createdon, comment, createdby) "
                 + $"values (NewID(), '{Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID")}', "
                 + "getutcdate(), "
-                + $"'{comment}', "
+                + "@comment, "
                 + "'WebApi')";
             using (SqlCommand cmd = new SqlCommand(sqlText, connection))
             {
+                var param = cmd.Parameters.Add("@comment", SqlDbType.NVarChar, 500);
+                param.Value = comment;
                 await cmd.ExecuteNonQueryAsync();
             }
         }

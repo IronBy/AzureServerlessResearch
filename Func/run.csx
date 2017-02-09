@@ -49,10 +49,12 @@ private static async Task AddDbLogItem(HttpRequestMessage req, SqlConnection con
     var sqlText = $"INSERT INTO ActionLog (id, nodeid, createdon, comment, createdby) "
         + $"values (NewID(), '{Environment.GetEnvironmentVariable("WEBSITE_INSTANCE_ID")}', "
         + "getutcdate(), "
-        + $"'{await GetParameter(req, "comment")}', "
-        + $"'azurefunc')";
+        + "@comment, "
+        + "'azurefunc')";
     using (SqlCommand cmd = new SqlCommand(sqlText, connection))
     {
+        var param = cmd.Parameters.Add("@comment", SqlDbType.NVarChar, 500);
+        param.Value = await GetParameter(req, "comment");
         await cmd.ExecuteNonQueryAsync();
     }
 }
