@@ -17,7 +17,7 @@ namespace LogApi.Controllers
     {
         [HttpPost]
         [AllowAnonymous]
-        public async Task<object> AddLog([FromBody]LogRequest logRequest)
+        public async Task<LogResult> AddLog([FromBody]LogRequest logRequest)
         {
             Trace.WriteLine("Api starts processing a request.");
             var stopWatch = Stopwatch.StartNew();
@@ -40,11 +40,11 @@ namespace LogApi.Controllers
                 throw new HttpResponseException(
                     Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Something went wrong"));
             }
-            
-            return new
+
+            return new LogResult
             {
-                elapsed = stopWatch.ElapsedMilliseconds,
-                items = result
+                Elapsed = (int)stopWatch.ElapsedMilliseconds,
+                Items = result
             };
         }
 
