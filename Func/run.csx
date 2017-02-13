@@ -54,7 +54,7 @@ private static async Task AddDbLogItem(HttpRequestMessage req, SqlConnection con
     using (SqlCommand cmd = new SqlCommand(sqlText, connection))
     {
         var param = cmd.Parameters.Add("@comment", SqlDbType.NVarChar, 500);
-        param.Value = await GetParameter(req, "comment");
+        param.Value = await GetParameter(req, "comment") ?? "";
         await cmd.ExecuteNonQueryAsync();
     }
 }
